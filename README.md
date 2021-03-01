@@ -1,8 +1,8 @@
-# Microsoft Learn AI Fundamentals Exercises
+# Microsoft Learn AI Fundamentals 실습
 
-The sample code in this repository is for use in hands-on exercises that support preparation for the [Microsoft Azure AI Fundamentals certification](https://docs.microsoft.com/learn/certifications/azure-ai-fundamentals).
+이 Repository에 있는 샘플 코드는 [Microsoft Azure AI Fundamentals certification](https://docs.microsoft.com/learn/certifications/azure-ai-fundamentals)를 준비하는데 지원하는 단계별 실습이 포함된다.
 
 
-## Contributing
-
-At this time, we are not accepting contributions to this repository. If you encounter an issue with the exercises, please [report it](https://docs.microsoft.com/learn/support/troubleshooting#report-feedback).
+## 한국어 편집자
+문서의 편집은 구병국입니다. 
+해당 번역내용은 Microsoft의 공식 번역본이 아닙니다. AI-900시험용을 위해서 편집되었으며 내용에 대한 보증과 기술지원은 하지 않습니다.
