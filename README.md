@@ -1,6 +1,6 @@
 # Microsoft Learn AI Fundamentals 실습
 
-이 Repository에 있는 샘플 코드는 [Microsoft Azure AI Fundamentals certification](https://docs.microsoft.com/learn/certifications/azure-ai-fundamentals)를 준비하는데 지원하는 단계별 실습이 포함된다.
+이 Repository에 있는 샘플 코드는 [Microsoft Azure AI Fundamentals certification](https://docs.microsoft.com/learn/certifications/azure-ai-fundamentals)를 준비하는데 지원하는 단계별 실습이 포함되어 있습니다.
 
 
 ## 한국어 편집자
