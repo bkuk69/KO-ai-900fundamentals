@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<!-- saved from url=(0105)https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/2-azure-image-classification -->
+<html class="is-full hasPageActions hasBreadcrumb has-default-focus theme-light js-focus-visible" lang="ko-kr" dir="ltr" data-css-variable-support="true" data-authenticated="true" data-auth-status-determined="true" data-target="docs" x-ms-format-detection="none" data-js-focus-visible=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	
+	
+	
+	
+			
+		
+		
+
+	
+	
+
+	
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/1-introduction" rel="canonical">
+	<title>Azure에서 이미지 분류 시작 - Learn | Microsoft Docs</title>
+
+		<link rel="stylesheet" href="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/97269d6d.site-ltr.css">
+
+	<link rel="stylesheet" href="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/bf60a3.moduleunitpage.css">
+
+
+	<script async="" defer="" crossorigin="anonymous" src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/lux.js.다운로드"></script><script async="" src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/analytics.js.다운로드"></script><script id="msdocs-script">
+	var msDocs = {
+		data: {
+			timeOrigin: Date.now(),
+			contentLocale: 'ko-kr',
+			contentDir: 'ltr',
+			userLocale: 'ko-kr',
+			userDir: 'ltr',
+			pageTemplate: 'ModuleUnit',
+			brand: '',
+			context: {
+
+			},
+			hasBinaryRating: false,
+			hasGithubIssues: false,
+			showFeedbackReport: false,
+			enableTutorialFeedback: false,
+			feedbackSystem: 'None',
+			feedbackGitHubRepo: '',
+			feedbackProductUrl: '',
+			contentGitUrl: 'https://github.com/MicrosoftDocs/learn.ko-kr/blob/master/learn-pr/wwl-data-ai/classify-images-custom-vision/1-introduction.yml',
+			extendBreadcrumb: false,
+			isEditDisplayable: false,
+			hideViewSource: false,
+			hasPageActions: true,
+			hasBookmark: true,
+			hasShare: false,
+			hasRecommendations: false,
+		},
+		functions:{}
+	};
+	</script>
+	<script src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/wcp-consent.js.다운로드"></script>
+	<script src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/jsll-4.js.다운로드"></script>
+	<script>window.jsllAwa = window.awa;</script>
+	<script nomodule="" src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/bluebird.min.js.다운로드" integrity="sha384-aD4BDeDGeLXLpPK4yKeqtZQa9dv4a/7mQ+4L5vwshIYH1Mc2BrXvHd32iHzYCQy5" crossorigin="anonymous"></script>
+	<script nomodule="" src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/fetch.umd.min.js.다운로드" integrity="sha384-EQIXrC5K2+7X8nGgLkB995I0/6jfAvvyG1ieZ+WYGxgJHFMD/alsG9fSDWvzb5Y1" crossorigin="anonymous"></script>
+	<script nomodule="" src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/template.min.js.다운로드" integrity="sha384-1zKzI6ldTVHMU7n0W2HpE/lhHI+UG4D9IIaxbj3kT2UhCWicdTuJkTtnKuu0CQzN" crossorigin="anonymous"></script>
+	<script nomodule="" src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/url.min.js.다운로드" integrity="sha384-vn7xBMtpSTfzaTRWxj0kVq0UcsbBrTOgZ/M1ISHqe1V358elYva+lfiEC+T8jLPc" crossorigin="anonymous"></script>
+	<script src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/f0a172e9.index-polyfills.js.다운로드"></script>
+
+		<script src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/1c205a11.index-docs.js.다운로드"></script><style></style>
+<script async="" src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/t.js.다운로드"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><script async="" src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/t.js(1).다운로드"></script><script async="" src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/t.js(2).다운로드"></script><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta property="og:title" content="Azure에서 이미지 분류 시작 - Learn"><meta property="og:type" content="website"><meta property="og:url" content="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/2-azure-image-classification"><meta property="og:description" content="Azure에서 이미지 분류 솔루션을 만들기 위한 옵션에 대해 알아봅니다."><meta property="og:image" content="https://docs.microsoft.com/en-us/media/logos/logo-ms-social.png"><meta property="og:image:alt" content="Microsoft Logo"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@docsmsft"><meta name="color-scheme" content="light dark"><meta name="uid" content="learn.wwl.classify-images-custom-vision.get-started"><meta name="page_type" content="learn"><meta name="page_kind" content="unit"><meta name="azure_sandbox" content="false"><meta name="sandbox" content="false"><meta name="author" content="benjiang"><meta name="breadcrumb_path" content="/learn/breadcrumb/toc.json"><meta name="clicktale" content="true"><meta name="depot_name" content="Docs.learn-pr"><meta name="description" content="Azure에서 이미지 분류 솔루션을 만들기 위한 옵션에 대해 알아봅니다."><meta name="document_id" content="29f31033-ff25-da76-4eca-dedf719f1b5d"><meta name="document_version_independent_id" content="4d434080-21d2-fb43-fcfc-efcee52afd98"><meta name="gitcommit" content="https://github.com/MicrosoftDocs/learn-pr.ko-KR/blob/69db3f90a0be9f2a4c01c9caff459fce09fed9ca/learn-pr/wwl-data-ai/classify-images-custom-vision/2-azure-image-classification.yml"><meta name="locale" content="ko-kr"><meta name="ms.author" content="gmalc"><meta name="ms.contentlocale" content="ko-KR"><meta name="ms.date" content="09/13/2020"><meta name="ms.lasthandoff" content="12/07/2020"><meta name="ms.locfileid" content="96775364"><meta name="ms.openlocfilehash" content="b8a3066776f536519a93fe1076f2a2d30dac1478"><meta name="ms.prod" content="learning-azure"><meta name="ms.sourcegitcommit" content="349b6ae6e9d38d0f728d8877fd2169a0a83ad22d"><meta name="ms.topic" content="interactive-tutorial"><meta name="ms.translationtype" content="HT"><meta name="original_content_git_url" content="https://github.com/MicrosoftDocs/learn-pr.ko-KR/blob/live/learn-pr/wwl-data-ai/classify-images-custom-vision/2-azure-image-classification.yml"><meta name="search.ms_docsetname" content="learn-pr"><meta name="search.ms_product" content="Docs"><meta name="search.ms_sitename" content="Docs"><meta name="site_name" content="Docs"><meta name="uhfHeaderId" content="MSDocsHeader-Learn"><meta name="updated_at" content="2020-12-10 09:10 AM"><meta name="unit_completion_type" content="view"><meta name="ROBOTS" content="noindex"></head>
+
+<body lang="ko-kr" dir="ltr"><div id="MathJax_Message" style="display: none;"></div>
+	<div class="header-holder has-default-focus">
+		<a href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/2-azure-image-classification#main" class="skip-to-main-link has-outline-color-text visually-hidden-until-focused is-fixed has-inner-focus focus-visible has-top-zero has-left-zero has-right-zero has-padding-medium has-text-centered has-body-background-medium" tabindex="1">주요 콘텐츠로 건너뛰기</a>
+		
+		<div id="ignite-banner-holder" class="has-default-focus has-overflow-hidden"></div>
+		
+		<div hidden="" id="cookie-consent-holder"></div>
+		<!-- liquid-tag banners global -->
+		<div id="headerAreaHolder" data-bi-name="header">
+<header role="banner" itemscope="itemscope" itemtype="http://schema.org/Organization"><!----> <div class="nav-bar"><!---->  <div class="nav-bar-brand">
+		<a class="nav-bar-button" itemprop="url" href="https://www.microsoft.com/" aria-label="Microsoft">
+			<div class="nav-bar-logo" role="presentation" aria-hidden="true" itemprop="logo" itemscope="itemscope">
+				<svg xmlns="http://www.w3.org/2000/svg" width="108" height="23" viewBox="72 72 337 74" preserveAspectRatio="xMidYMin slice">
+					<g data-name="MS-symbol">
+						<clippath id="a">
+							<path transform="matrix(1 0 0 -1 0 216)" d="M0 216h482V0H0z"></path>
+						</clippath>
+						<g clip-path="url(#a)">
+							<path class="has-fill-current-color has-text-subtle" d="M394.942 104.59h-10.858v25.003h-7.38V104.59h-5.182v-5.965h5.182v-4.308c0-3.254 1.06-5.92 3.178-7.998 2.12-2.079 4.835-3.118 8.15-3.118.882 0 1.666.045 2.35.135a9.37 9.37 0 011.806.407v6.296c-.24-.14-.663-.31-1.265-.512-.603-.2-1.296-.3-2.078-.3-1.528 0-2.702.476-3.526 1.43-.824.954-1.235 2.365-1.235 4.232v3.736h10.858v-6.959l7.321-2.229v9.188h7.381v5.965h-7.38v14.49c0 1.91.345 3.254 1.038 4.037.693.783 1.782 1.175 3.27 1.175.42 0 .927-.1 1.52-.3a7.178 7.178 0 001.552-.724v6.025c-.463.261-1.23.502-2.305.723a15.742 15.742 0 01-3.178.331c-3.073 0-5.378-.817-6.914-2.455-1.537-1.637-2.305-4.102-2.305-7.396zm-48.407 9.73c0 3.233.733 5.703 2.2 7.411 1.465 1.707 3.564 2.56 6.295 2.56 2.652 0 4.67-.853 6.055-2.56 1.386-1.708 2.08-4.238 2.08-7.592 0-3.334-.719-5.849-2.155-7.547-1.436-1.697-3.45-2.545-6.04-2.545-2.67 0-4.745.888-6.22 2.666-1.477 1.777-2.215 4.313-2.215 7.607m-7.592.24c0-5.12 1.446-9.177 4.338-12.17 2.892-2.993 6.91-4.489 12.05-4.489 4.841 0 8.621 1.441 11.343 4.323 2.721 2.883 4.082 6.774 4.082 11.674 0 5.021-1.447 9.018-4.338 11.99-2.892 2.973-6.829 4.458-11.81 4.458-4.8 0-8.61-1.41-11.432-4.232-2.822-2.82-4.233-6.673-4.233-11.554m-16.417-7.802c0 1.045.331 1.863.994 2.456.662.592 2.128 1.34 4.398 2.243 2.912 1.166 4.956 2.476 6.131 3.932 1.175 1.456 1.762 3.22 1.762 5.287 0 2.912-1.12 5.252-3.359 7.02-2.24 1.767-5.267 2.65-9.083 2.65-1.285 0-2.706-.155-4.263-.467-1.556-.31-2.877-.707-3.96-1.19v-7.169a17.945 17.945 0 004.277 2.198c1.526.543 2.911.814 4.157.814 1.647 0 2.862-.23 3.645-.693.784-.46 1.175-1.235 1.175-2.319 0-1.005-.406-1.853-1.22-2.546-.813-.693-2.355-1.492-4.624-2.395-2.69-1.125-4.599-2.39-5.724-3.796-1.125-1.406-1.687-3.193-1.687-5.362 0-2.792 1.11-5.086 3.33-6.884 2.217-1.797 5.095-2.696 8.63-2.696 1.084 0 2.3.12 3.645.361 1.346.242 2.47.553 3.374.934v6.93c-.964-.644-2.089-1.195-3.374-1.658-1.286-.462-2.56-.693-3.826-.693-1.386 0-2.465.271-3.238.813-.774.543-1.16 1.286-1.16 2.23m-35.066 7.562c0 3.233.733 5.703 2.2 7.411 1.465 1.707 3.564 2.56 6.295 2.56 2.652 0 4.67-.853 6.055-2.56 1.386-1.708 2.08-4.238 2.08-7.592 0-3.334-.719-5.849-2.155-7.547-1.436-1.697-3.449-2.545-6.039-2.545-2.672 0-4.745.888-6.222 2.666-1.476 1.777-2.214 4.313-2.214 7.607m-7.592.24c0-5.12 1.446-9.177 4.338-12.17 2.893-2.993 6.91-4.489 12.051-4.489 4.84 0 8.621 1.441 11.342 4.323 2.721 2.883 4.082 6.774 4.082 11.674 0 5.021-1.446 9.018-4.338 11.99-2.892 2.973-6.828 4.458-11.809 4.458-4.8 0-8.61-1.41-11.433-4.232-2.822-2.82-4.233-6.673-4.233-11.554m-3.136-16.448c.582 0 1.105.041 1.567.121.462.08.853.18 1.175.301v7.38c-.382-.28-.939-.546-1.672-.798-.733-.25-1.622-.376-2.666-.376-1.788 0-3.299.753-4.534 2.26-1.235 1.505-1.853 3.825-1.853 6.958v15.635h-7.29V98.624h7.29v4.88h.12c.663-1.687 1.667-3.007 3.013-3.96 1.346-.954 2.962-1.432 4.85-1.432m-27.956 26.18c1.084 0 2.28-.25 3.585-.754a15.06 15.06 0 003.615-1.988v6.778c-1.165.663-2.485 1.165-3.962 1.506-1.475.342-3.098.512-4.865.512-4.559 0-8.265-1.44-11.116-4.323-2.852-2.88-4.278-6.562-4.278-11.04 0-4.98 1.456-9.083 4.37-12.307 2.91-3.224 7.037-4.835 12.38-4.835 1.366 0 2.746.176 4.143.527 1.395.352 2.504.758 3.328 1.22v6.99c-1.125-.824-2.274-1.462-3.45-1.914a9.966 9.966 0 00-3.599-.678c-2.872 0-5.192.934-6.959 2.802-1.768 1.868-2.652 4.388-2.652 7.562 0 3.132.85 5.573 2.546 7.32 1.697 1.748 4.002 2.621 6.914 2.621m-22.112 5.302h-7.29V98.624h7.29zm-8.044-39.916c0-1.205.437-2.214 1.311-3.028.874-.813 1.913-1.22 3.118-1.22 1.285 0 2.35.417 3.193 1.25.844.834 1.266 1.833 1.266 2.998 0 1.185-.432 2.18-1.296 2.982-.864.804-1.918 1.205-3.163 1.205-1.246 0-2.295-.406-3.148-1.219-.854-.815-1.28-1.803-1.28-2.968m-6.274-3.284v43.2h-7.5v-33.86h-.12l-13.408 33.86h-4.97l-13.738-33.86h-.09v33.86h-6.929v-43.2h10.755l12.412 32.024h.18l13.105-32.024z"></path>
+							<path d="M106.214 106.214H71.996V71.996h34.218z" fill="#f25022"></path>
+							<path d="M143.993 106.214h-34.218V71.996h34.218z" fill="#7fba00"></path>
+							<path d="M106.214 143.993H71.996v-34.218h34.218z" fill="#00a4ef"></path>
+							<path d="M143.993 143.993h-34.218v-34.218h34.218z" fill="#ffb900"></path>
+						</g>
+					</g>
+				</svg>
+			</div>
+		</a>
+	</div> 
+				
+		<div class="nav-bar-item is-hidden-tablet">
+			<div class="nav-bar-menu">
+				<button class="nav-bar-button is-title" title="전역 탐색" aria-expanded="false">
+					<span class="nav-bar-menu-title"><!---->Learn<!----></span>
+					<div class="nav-bar-burger">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span class="nav-bar-burger-label"><!---->전역 탐색<!----></span>
+					</div>
+				</button>
+			</div>
+		</div>
+	
+				
+		<nav class="nav-bar-nav" role="navigation" aria-label="전역">
+			<ul class="nav-bar-nav-list">
+				
+		<li class="nav-bar-item is-category">
+			<a class="nav-bar-button is-title has-hover-underline" itemprop="url" href="https://docs.microsoft.com/ko-kr/">
+				<span><!---->Docs<!----></span>
+			</a>
+		</li>
+	
+				<!----> <li class="nav-bar-item">
+				<a class=" nav-bar-button has-hover-underline " href="https://docs.microsoft.com/ko-kr/documentation">
+					<span><!---->설명서<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class=" nav-bar-button has-hover-underline is-active" href="https://docs.microsoft.com/ko-kr/learn/">
+					<span><!---->Learn<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class=" nav-bar-button has-hover-underline " href="https://docs.microsoft.com/ko-kr/answers/products/">
+					<span><!---->Q&amp;A<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class=" nav-bar-button has-hover-underline " href="https://docs.microsoft.com/ko-kr/samples/browse/">
+					<span><!---->코드 샘플<!----></span>
+				</a>
+		  </li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-73">
+			<span><!---->자세히<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-73" aria-label="자세히">
+			<!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://docs.microsoft.com/ko-kr/documentation"><!---->설명서<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button is-active" href="https://docs.microsoft.com/ko-kr/learn/"><!---->Learn<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://docs.microsoft.com/ko-kr/answers/products/"><!---->Q&amp;A<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://docs.microsoft.com/ko-kr/samples/browse/"><!---->코드 샘플<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+			</ul>
+		</nav>
+	
+				<span class="nav-bar-spacer"></span>
+				
+		<div class="nav-bar-search " id="ax-74" hidden="">
+			
+		<form class="nav-bar-search-form" method="GET" name="nav-bar-search-form" role="search" id="nav-bar-search-form" aria-label="검색" aria-expanded="false" action="https://docs.microsoft.com/ko-kr/search/">
+			<div class="autocomplete" data-bi-name="autocomplete"><!----> <div class="control ">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" id="site-search-input" class="autocomplete-input input   is-small" type="search" name="terms" aria-expanded="false" aria-owns="ax-75-listbox" aria-activedescendant="" aria-label="검색" placeholder="검색">
+
+				<span aria-hidden="true" class="icon is-small is-left" hidden="">
+					<span class="has-text-primary docon docon-undefined"></span>
+				</span>
+
+				<span aria-hidden="true" class="autocomplete-loader loader has-text-primary " hidden=""></span>
+			</div>
+
+			<ul class="autocomplete-suggestions is-vertically-scrollable" role="listbox" id="ax-75-listbox" aria-label="site-search-input-suggestions" hidden="">
+				
+			</ul><!----></div>
+			<!-- mobile safari will not dispatch submit event unless there's a submit button that is not display:none -->
+			<button type="submit" class="visually-hidden" tabindex="-1" aria-hidden="true"></button>
+			<input name="category" hidden="" value="Learn">
+			
+			
+			
+		</form>
+	
+		</div>
+		
+					<div class="nav-bar-search">
+						<!-- hidden when the width drops to tablet -->
+						
+		<form class="nav-bar-search-form" method="GET" name="nav-bar-search-form" role="search" id="nav-bar-search-form-desktop" aria-label="검색" aria-expanded="false" action="https://docs.microsoft.com/ko-kr/search/">
+			<div class="autocomplete" data-bi-name="autocomplete"><!----> <div class="control has-icons-left">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" id="ax-76" class="autocomplete-input input control has-icons-left  is-small" type="search" name="terms" aria-expanded="false" aria-owns="ax-77-listbox" aria-activedescendant="" aria-label="검색" placeholder="검색">
+
+				<span aria-hidden="true" class="icon is-small is-left">
+					<span class="has-text-primary docon docon-search"></span>
+				</span>
+
+				<span aria-hidden="true" class="autocomplete-loader loader has-text-primary " hidden=""></span>
+			</div>
+
+			<ul class="autocomplete-suggestions is-vertically-scrollable" role="listbox" id="ax-77-listbox" aria-label="ax-76-suggestions" hidden="">
+				
+			</ul><!----></div>
+			<!-- mobile safari will not dispatch submit event unless there's a submit button that is not display:none -->
+			<button type="submit" class="visually-hidden" tabindex="-1" aria-hidden="true"></button>
+			<input name="category" hidden="" value="Learn">
+			
+			
+			
+		</form>
+	
+					</div>
+			  
+		<div class="nav-bar-search " hidden="">
+			<div class="nav-bar-search-form-expander">
+				<button id="form-expander" class="nav-bar-button has-hover-underline " title="검색" aria-expanded="false" aria-controls="ax-74">
+					
+		<span class="is-visually-hidden-mobile"><!---->검색<!----></span>
+		<span class="icon" aria-hidden="true">
+			<span class="docon docon-search"></span>
+		</span>
+	
+				</button>
+			</div>
+		</div>
+	
+				
+		<div class="nav-bar-profile">
+			
+		<a class="docs-sign-in auth-status-determined not-authenticated" href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/2-azure-image-classification#"> 로그인 </a>
+	 
+		<div class="dropdown has-caret auth-status-determined authenticated">
+			<button class="dropdown-trigger button-reset" aria-controls="user-menu" aria-expanded="false" aria-label="계정">
+				<figure class="image is-36x36">
+					<img class="has-body-background-medium is-rounded" alt="" data-profile-property="avatarUrl" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNDQ4Ij48cGF0aCBmaWxsPSIjOTE5MTkxIiBkPSJNMjc3LjczMyAyNTIuODFjMzEuOTY2LTE4LjY0NCA1My43NDItNTIuOTIzIDUzLjc0Mi05Mi41MjcgMC01OS4yNjctNDguMjItMTA3LjQ3NS0xMDcuNDc1LTEwNy40NzUtNTkuMjY3IDAtMTA3LjQ3NSA0OC4yMDgtMTA3LjQ3NSAxMDcuNDc1IDAgMzkuNjA0IDIxLjc3IDczLjg4NCA1My43MzggOTIuNTI4QzExMi4zNSAyNzQuMTA1IDcyIDMyOC45OTggNzIgMzk1LjE5M2gyNC41NjZjMC03MS40NjYgNTUuOTgtMTI3LjQzNCAxMjcuNDM0LTEyNy40MzQgNzIuNjQgMCAxMjcuNDM0IDU0Ljc5MyAxMjcuNDM0IDEyNy40MzRIMzc2YzAtNjYuMTk3LTQwLjM1LTEyMS4wOS05OC4yNjctMTQyLjM4M3pNMTQxLjA5IDE2MC4yODJjMC00NS43MTMgMzcuMTk3LTgyLjkxIDgyLjkxLTgyLjkxIDQ1LjcyNSAwIDgyLjkxIDM3LjE5NyA4Mi45MSA4Mi45MXMtMzcuMTg2IDgyLjkxLTgyLjkxIDgyLjkxYy00NS43MTMgMC04Mi45MS0zNy4xOTctODIuOTEtODIuOTF6Ii8+PC9zdmc+">
+				</figure>
+			</button>
+			<div class="dropdown-menu box has-flex-justify-content-start has-body-background" id="user-menu" role="menu">
+				<div class="media is-user-dir">
+					<div class="media-left">
+						<figure class="image is-48x48" aria-hidden="true">
+							<img class="has-body-background-medium is-rounded" aria-labelledby="displayName" data-profile-property="avatarUrl" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNDQ4Ij48cGF0aCBmaWxsPSIjOTE5MTkxIiBkPSJNMjc3LjczMyAyNTIuODFjMzEuOTY2LTE4LjY0NCA1My43NDItNTIuOTIzIDUzLjc0Mi05Mi41MjcgMC01OS4yNjctNDguMjItMTA3LjQ3NS0xMDcuNDc1LTEwNy40NzUtNTkuMjY3IDAtMTA3LjQ3NSA0OC4yMDgtMTA3LjQ3NSAxMDcuNDc1IDAgMzkuNjA0IDIxLjc3IDczLjg4NCA1My43MzggOTIuNTI4QzExMi4zNSAyNzQuMTA1IDcyIDMyOC45OTggNzIgMzk1LjE5M2gyNC41NjZjMC03MS40NjYgNTUuOTgtMTI3LjQzNCAxMjcuNDM0LTEyNy40MzQgNzIuNjQgMCAxMjcuNDM0IDU0Ljc5MyAxMjcuNDM0IDEyNy40MzRIMzc2YzAtNjYuMTk3LTQwLjM1LTEyMS4wOS05OC4yNjctMTQyLjM4M3pNMTQxLjA5IDE2MC4yODJjMC00NS43MTMgMzcuMTk3LTgyLjkxIDgyLjkxLTgyLjkxIDQ1LjcyNSAwIDgyLjkxIDM3LjE5NyA4Mi45MSA4Mi45MXMtMzcuMTg2IDgyLjkxLTgyLjkxIDgyLjkxYy00NS43MTMgMC04Mi45MS0zNy4xOTctODIuOTEtODIuOTF6Ii8+PC9zdmc+">
+						</figure>
+					</div>
+					<div class="media-content">
+						<p class="title is-size-large">
+							<span id="displayName" class="is-inline-truncated has-max-width-200" data-profile-property="displayName">Byeongguk Ku</span>
+						</p>
+						<p class="subtitle is-size-small has-margin-bottom-none">
+							<span class="is-inline-truncated has-max-width-200" data-profile-property="upn">richku@gmail.com</span>
+						</p>
+					</div>
+				</div>
+				<ul class="has-padding-top-small has-padding-bottom-medium">
+					<li class="has-padding-top-extra-small has-padding-bottom-extra-small">
+						<a href="https://docs.microsoft.com/ko-kr/users/ByeonggukKu-6573/" data-profile-property="profileUrl"><!---->프로필<!----></a>
+					</li>
+					<li class="has-padding-top-extra-small has-padding-bottom-extra-small">
+						<a href="https://docs.microsoft.com/ko-kr/users/ByeonggukKu-6573/bookmarks" data-profile-property="bookmarksUrl"><!---->책갈피<!----></a>
+					</li>
+					<li class="has-padding-top-extra-small has-padding-bottom-extra-small">
+						<a href="https://docs.microsoft.com/ko-kr/users/ByeonggukKu-6573/collections" data-profile-property="collectionsUrl"><!---->컬렉션<!----></a>
+					</li>
+					<li class="has-padding-top-extra-small">
+						<a href="https://docs.microsoft.com/ko-kr/users/ByeonggukKu-6573/challenges" data-profile-property="challengesUrl"><!---->과제<!----></a>
+					</li>
+				</ul>
+				<div class="has-border-top has-padding-top-medium">
+					<a class="docs-sign-out" href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/2-azure-image-classification#"><!---->로그아웃<!----></a>
+				</div>
+			</div>
+		</div>
+	
+		</div>
+	
+			 <!----></div> <div class="nav-bar has-border-top is-hidden-mobile"><!----> 
+		<a class="nav-bar-button is-title has-hover-underline" itemprop="url" href="https://docs.microsoft.com/learn/">
+			<span>
+				Learn
+				
+			</span>
+		</a>
+	 
+		
+		<nav class="nav-bar-nav" role="navigation" aria-label="사이트">
+			<ul class="nav-bar-nav-list">
+				
+				<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button is-active has-hover-underline" aria-controls="ax-78">
+			<span><!---->제품<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-78" aria-label="제품">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/azure/"><!---->Azure<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/dynamics365/"><!---->Dynamics 365<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/github"><!---->GitHub<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/m365/"><!---->Microsoft 365<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/dotnet/"><!---->.NET<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/powerplatform/"><!---->Power Platform<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/teams/"><!---->Teams<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/browse/"><!---->모든 경로 찾아보기<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-79">
+			<span><!---->역할<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-79" aria-label="역할">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/administrator"><!---->관리자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/ai-engineer"><!---->AI 엔지니어<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/app-maker"><!---->앱 작성자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/business-user"><!---->비즈니스 사용자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/data-analyst"><!---->데이터 분석가<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/data-engineer"><!---->데이터 엔지니어<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/data-scientist"><!---->데이터 과학자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/developer"><!---->개발자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/devops-engineer"><!---->DevOps 엔지니어<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/educator"><!---->강사<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/functional-consultant"><!---->기능 컨설턴트<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/security-engineer"><!---->보안 엔지니어<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/solutions-architect"><!---->솔루션 설계자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/student"><!---->학생<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="nav-bar-item">
+				<a class="has-external-link-indicator nav-bar-button has-hover-underline " href="https://docs.microsoft.com/ko-kr/learn/tv/">
+					<span><!---->Learn TV<!----></span>
+				</a>
+		  </li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-80">
+			<span><!---->인증<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-80" aria-label="인증">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/certifications/"><!---->개요<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/certifications/browse/"><!---->인증 찾아보기<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/certifications/courses/browse/"><!---->과정 찾아보기<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="nav-bar-item">
+				<a class="has-external-link-indicator nav-bar-button has-hover-underline " href="https://docs.microsoft.com/ko-kr/learn/support/">
+					<span><!---->FAQ 및 도움말<!----></span>
+				</a>
+		  </li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-81">
+			<span><!---->자세히<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-81" aria-label="자세히">
+			<!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button is-active " aria-controls="ax-82">
+			<span><!---->제품<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-82" aria-label="제품">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/azure/"><!---->Azure<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/dynamics365/"><!---->Dynamics 365<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/github"><!---->GitHub<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/m365/"><!---->Microsoft 365<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/dotnet/"><!---->.NET<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/powerplatform/"><!---->Power Platform<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/teams/"><!---->Teams<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/browse/"><!---->모든 경로 찾아보기<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-83">
+			<span><!---->역할<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-83" aria-label="역할">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/administrator"><!---->관리자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/ai-engineer"><!---->AI 엔지니어<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/app-maker"><!---->앱 작성자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/business-user"><!---->비즈니스 사용자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/data-analyst"><!---->데이터 분석가<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/data-engineer"><!---->데이터 엔지니어<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/data-scientist"><!---->데이터 과학자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/developer"><!---->개발자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/devops-engineer"><!---->DevOps 엔지니어<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/educator"><!---->강사<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/functional-consultant"><!---->기능 컨설턴트<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/security-engineer"><!---->보안 엔지니어<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/solutions-architect"><!---->솔루션 설계자<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/roles/student"><!---->학생<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+				<li class="nav-bar-item" hidden="">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/tv/"><!---->Learn TV<!----></a>
+				</li>
+		  <!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-84">
+			<span><!---->인증<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-84" aria-label="인증">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/certifications/"><!---->개요<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/certifications/browse/"><!---->인증 찾아보기<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/certifications/courses/browse/"><!---->과정 찾아보기<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+				<li class="nav-bar-item" hidden="">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/ko-kr/learn/support/"><!---->FAQ 및 도움말<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+			</ul>
+		</nav>
+	
+		<span class="nav-bar-spacer"></span>
+		 
+		<div id="level-status-container" class="is-flex has-flex-align-items-center is-hidden-touch">
+			<div id="level-status" class="is-relative level has-margin-left-extra-small has-margin-right-extra-small">
+	<a href="https://docs.microsoft.com/ko-kr/users/ByeonggukKu-6573/" class="is-absolute-fills has-z-index-one" aria-label="프로필"></a>
+	<span id="level-status-text" class="is-size-extra-small has-text-wrap is-inline-truncated is-uppercase has-text-weight-semibold">수준 7</span>
+	<span id="level-status-progress-container" class="hexagonal-progress">
+		<progress id="level-status-progress" class="progress is-hidden-mobile is-inline-block is-relative is-success" value="96" max="100">96%</progress>
+		<span class="hexagonal-progress-marker"></span>
+	</span>
+	<span id="level-status-points" class="is-size-extra-small has-text-wrap is-inline-truncated is-uppercase"><span class="has-text-weight-semibold">15700</span>/16199 XP</span>
+</div>
+		</div>
+	
+	 <!----></div> <!----></header>		</div>
+
+						<div class="content-header uhf-container has-padding has-default-focus has-border-bottom-none" data-bi-name="content-header">
+					<nav class="breadcrumb-holder has-padding-none has-padding-left-medium-tablet has-padding-right-medium-tablet has-padding-left-none-uhf-tablet has-padding-left-none-uhf-tablet has-padding-none-desktop has-flex-grow" data-bi-name="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList" role="navigation" aria-label="이동 경로">
+						<ul id="page-breadcrumbs" class="breadcrumbs"><!----><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				<a itemprop="item" href="https://docs.microsoft.com/ko-kr/"><span itemprop="name"><!---->Docs<!----></span></a>
+				<meta itemprop="position" content="1">
+			</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				<a itemprop="item" href="https://docs.microsoft.com/ko-kr/learn/"><span itemprop="name"><!---->Learn<!----></span></a>
+				<meta itemprop="position" content="2">
+			</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				<a itemprop="item" href="https://docs.microsoft.com/ko-kr/learn/browse/"><span itemprop="name"><!---->찾아보기<!----></span></a>
+				<meta itemprop="position" content="3">
+			</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				<a itemprop="item" href="https://docs.microsoft.com/ko-kr/learn/paths/explore-computer-vision-microsoft-azure/"><span itemprop="name"><!---->Microsoft Azure에서 컴퓨터 비전 살펴보기<!----></span></a>
+				<meta itemprop="position" content="4">
+			</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				<a itemprop="item" href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/"><span itemprop="name"><!---->Custom Vision 서비스를 사용한 이미지 분류<!----></span></a>
+				<meta itemprop="position" content="5">
+			</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				<span itemprop="name"><!---->Azure에서 이미지 분류 시작<!----></span>
+				<meta itemprop="position" content="6">
+			</li><!----><!----></ul>
+					</nav>
+				<div class="content-header-controls">
+					<button type="button" class="contents-button button" data-bi-name="contents-expand" aria-haspopup="true">
+						<span class="icon"><span class="docon docon-menu" aria-hidden="true"></span></span>
+						<span class="contents-expand-title">콘텐츠</span>
+					</button>
+					<button type="button" class="ap-collapse-behavior ap-expanded button" data-bi-name="ap-collapse" aria-controls="action-panel">
+						<span class="icon"><span class="docon docon-exit-mode" aria-hidden="true"></span></span>
+						<span>포커스 모드 종료</span>
+					</button>
+				</div>
+				<div class="has-padding-none-tablet has-padding-medium is-size-small is-flex-touch has-flex-justify-content-space-between-touch has-flex-grow page-action-holder">
+					<ul class="is-hidden-mobile action-list has-flex-justify-content-start has-flex-justify-content-end-tablet is-flex is-flex-row has-flex-wrap has-flex-grow is-unstyled">
+						<li>
+							<button type="button" class="bookmark button is-text has-inner-focus is-small is-icon-only-touch" data-list-type="bookmarks" data-bi-name="bookmark" title="Azure에서 이미지 분류 시작 - Learn | Microsoft Docs의 책갈피 추가" aria-pressed="false">
+								<span class="icon" aria-hidden="true">
+									<span class="docon docon-single-bookmark"></span>
+								</span>
+								<span class="bookmark-status is-visually-hidden-touch is-hidden-portrait">책갈피</span>
+							</button>
+						</li>
+					</ul>
+					<button type="button" class="has-border contents-button button is-small is-text is-hidden-tablet has-inner-focus" aria-label="콘텐츠" data-bi-name="contents-expand">
+						<span class="icon">
+							<span class="docon docon-editor-list-bullet" aria-hidden="true"></span>
+						</span>
+						<span class="contents-expand-title">목차</span>
+					</button>
+					<div class="is-invisible"></div>
+					<div class="is-hidden-tablet level-item is-flexible level-right">
+						<button type="button" class="page-actions-button button is-small is-text is-hidden-tablet has-inner-focus has-border is-full-height  has-margin-left-small" aria-label="페이지 작업" data-bi-name="pageactions">
+							<span class="icon">
+								<span class="docon docon-more-vertical" aria-hidden="true"></span>
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+
+
+
+		<div id="disclaimer-holder" class="has-overflow-hidden has-default-focus">
+			<!-- liquid-tag banners sectional -->
+		</div>
+	</div>
+
+	<div class="mainContainer  uhf-container has-body-background-dark uhf-container is-full  has-default-focus" data-bi-name="body">
+
+		<div class="columns has-large-gaps is-gapless-mobile  is-gapless">
+
+
+			<section class="primary-holder column  is-full ">
+				<div class="columns is-gapless-mobile has-large-gaps  is-gapless">
+
+
+				<div id="main-column" class="column  is-full ">
+
+					<main id="main" role="main" class="content " data-bi-name="content" lang="ko-kr" dir="ltr">
+
+
+<div class="modular-content-container" data-target="docs">
+    <nav class="pagination is-centered is-wide" role="navigation" aria-label="페이지 매김" data-bi-name="module-nav">
+        <a class="pagination-previous button is-text has-text-primary is-undecorated is-hidden-portrait has-inner-focus" data-bi-name="previous-unit" id="previous-unit-link" href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/1-introduction/">
+            <span aria-hidden="true" class="icon docon docon-chevron-left-light"></span>
+            <span>이전</span>
+        </a>
+        <ul class="pagination-list">
+            <li class="dropdown has-centered-menu has-caret" data-bi-name="unit-menu">
+                <button aria-controls="module-menu" aria-expanded="false" class="pagination-link has-margin-auto-sides button is-text is-undecorated is-small dropdown-trigger" data-bi-name="dropdown-trigger" title="Module menu">
+                    <span id="unit-place">단위 2/5</span>
+                    <span aria-hidden="true" class="icon">
+                        <span class="docon docon-chevron-down-light expanded-indicator"></span>
+                    </span>
+                </button>
+                <div class="dropdown-menu has-width-450" id="module-menu" role="menu">
+	<div class="nav-box">
+		<h2 class="nav-box-title is-size-body has-margin-top-none">Custom Vision 서비스를 사용한 이미지 분류</h2>
+		<ul class="has-margin-none is-size-small has-text-subtle is-unstyled" data-bi-name="module-menu-links">
+			
+				<li data-nav-uid="learn.wwl.classify-images-custom-vision.introduction" data-progress-uid="learn.wwl.classify-images-custom-vision.introduction" class="nav-box-line module-navigation-item completable is-unstyled is-complete">
+					<a href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/1-introduction/" class="line-item is-spaced has-inner-focus">
+						<span>소개</span><div>
+							<span class="is-hidden-complete is-undecorated has-no-wrap">3 min</span>
+							<span class="is-shown-complete has-text-success docon docon-check">
+								<span class="is-visually-hidden">: 완료됨</span>
+							</span>
+						</div>
+					</a>
+				</li>
+			
+				<li data-nav-uid="learn.wwl.classify-images-custom-vision.get-started" data-progress-uid="learn.wwl.classify-images-custom-vision.get-started" class="nav-box-line module-navigation-item completable is-unstyled is-current is-complete">
+					<a href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/2-azure-image-classification/" class="line-item is-spaced has-inner-focus">
+						<span>Azure에서 이미지 분류 시작</span><div>
+							<span class="is-hidden-complete is-undecorated has-no-wrap">3 min</span>
+							<span class="is-shown-complete has-text-success docon docon-check">
+								<span class="is-visually-hidden">: 완료됨</span>
+							</span>
+						</div>
+					</a>
+				</li>
+			
+				<li data-nav-uid="learn.wwl.classify-images-custom-vision.exercise" data-progress-uid="learn.wwl.classify-images-custom-vision.exercise" class="nav-box-line module-navigation-item completable is-unstyled is-complete">
+					<a href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/3-create-image-classifier/" class="line-item is-spaced has-inner-focus">
+						<span>연습 - 이미지 분류 솔루션 만들기</span><div>
+							<span class="is-hidden-complete is-undecorated has-no-wrap">25 min</span>
+							<span class="is-shown-complete has-text-success docon docon-check">
+								<span class="is-visually-hidden">: 완료됨</span>
+							</span>
+						</div>
+					</a>
+				</li>
+			
+				<li data-nav-uid="learn.wwl.classify-images-custom-vision.knowledge-check" data-progress-uid="learn.wwl.classify-images-custom-vision.knowledge-check" class="nav-box-line module-navigation-item completable is-unstyled is-complete">
+					<a href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/3a-knowledge-check/" class="line-item is-spaced has-inner-focus">
+						<span>지식 점검</span><div>
+							<span class="is-hidden-complete is-undecorated has-no-wrap">2 min</span>
+							<span class="is-shown-complete has-text-success docon docon-check">
+								<span class="is-visually-hidden">: 완료됨</span>
+							</span>
+						</div>
+					</a>
+				</li>
+			
+				<li data-nav-uid="learn.wwl.classify-images-custom-vision.summary" data-progress-uid="learn.wwl.classify-images-custom-vision.summary" class="nav-box-line module-navigation-item completable is-unstyled is-complete">
+					<a href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/4-summary/" class="line-item is-spaced has-inner-focus">
+						<span>요약</span><div>
+							<span class="is-hidden-complete is-undecorated has-no-wrap">1 min</span>
+							<span class="is-shown-complete has-text-success docon docon-check">
+								<span class="is-visually-hidden">: 완료됨</span>
+							</span>
+						</div>
+					</a>
+				</li>
+			
+		</ul>
+	</div>
+	</div>
+            </li>
+        </ul>
+        <a class="pagination-next button is-text has-text-primary is-undecorated is-hidden-portrait has-inner-focus" data-bi-name="next-unit" id="next-unit-link" href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/3-create-image-classifier/">
+            <span>다음</span>
+            <span aria-hidden="true" class="icon docon docon-chevron-right-light"></span>
+        </a>
+    </nav>
+</div>
+<div class="columns is-mobile is-gapless is-fixed-bottom is-hidden-tablet is-hidden-landscape has-body-background has-margin-none" id="mobile-nav">
+    <div class="column" id="previous-unit-link-mobile-col">
+        <a class="button is-fullwidth is-tertiary is-radiusless is-large has-margin-none has-inner-focus" data-bi-name="previous-unit" id="previous-unit-link-mobile" href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/1-introduction/">
+            <span aria-hidden="true" class="icon docon docon-chevron-left-light"></span>
+            <span>이전</span>
+        </a>
+    </div>
+    <div class="column" id="next-unit-link-mobile-col">
+        <a class="button is-fullwidth is-primary is-radiusless is-large has-margin-none has-inner-focus" data-bi-name="next-unit" id="next-unit-link-mobile" href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/3-create-image-classifier/">
+            <span>다음</span>
+            <span aria-hidden="true" class="icon docon docon-chevron-right-light"></span>
+        </a>
+    </div>
+</div>
+
+						
+
+
+						<!-- <content> -->
+							<div class="modular-content-container has-body-background box">
+	<div id="unit-inner-section" class="section is-uniform is-relative">
+		<h1 class="has-margin-right-super-large-desktop">Azure에서 이미지 분류 시작</h1>
+		<ul class="metadata page-metadata">
+			<li>3분</li>
+		</ul>
+			<p>Azure Cognitive Services 제품의 일부로 제공되는 Custom Vision 서비스를 사용하여 이미지 분류를 수행할 수 있습니다. 일반적으로 모델 학습 코드를 작성하는 것보다 쉽고 빠르게 수행할 수 있으며, 기계 학습 전문 지식이 거의 없거나 전혀 없는 사람도 효과적인 이미지 분류 솔루션을 만들 수 있습니다.</p>
+<h2 id="azure-resources-for-custom-vision">Custom Vision용 Azure 리소스</h2>
+<p>Custom Vision을 이용하여 이미지 분류 솔루션을 만드는 과정은 두 가지 주요 작업으로 이루어집니다. 먼저 기존 이미지를 사용하여 모델을 학습시킨 다음 클라이언트 애플리케이션에서 예측을 할 수 있도록 모델을 게시해야 합니다.</p>
+<p>각 작업을 위해서는 Azure 구독의 리소스가 필요합니다. 다음과 같은 유형의 리소스를 사용할 수 있습니다.</p>
+<ul>
+<li><strong>Custom Vision</strong>: Custom Vision 서비스 전용 리소스는 학습 리소스, 예측 리소스 또는 두 리소스 모두가 될 수 있습니다.</li>
+<li><strong>Cognitive Services</strong>: 다른 많은 인지 서비스와 함께 Custom Vision을 포함하는 일반적인 Cognitive Services 리소스입니다. 이러한 유형의 리소스를 학습, 예측 또는 둘 다에 사용할 수 있습니다.</li>
+</ul>
+<p>학습 리소스와 예측 리소스의 분리는 모델을 사용하여 이미지 클래스를 예측하는 클라이언트 애플리케이션과는 별도로 모델 학습의 리소스 사용률을 추적하려는 경우에 유용합니다. 그러나 이미지 분류 솔루션 개발이 약간 혼란스러워질 수 있습니다.</p>
+<p>가장 간단한 방법은 학습과 예측에 일반 Cognitive Services 리소스를 사용하는 것입니다. 즉, 하나의 엔드포인트(서비스가 호스팅되는 HTTP 주소)와 키(클라이언트 애플리케이션에서 자체 인증 목적으로 사용하는 비밀 값)에만 신경 쓰면 됩니다.</p>
+<p>Custom Vision 리소스를 만들도록 선택하면 ‘학습’, ‘예측’ 또는 ‘둘 다’를 선택하라는 메시지가 표시되며, “둘 다”를 선택하면 학습 및 예측을 위해 ‘<strong>두 개</strong>’의 리소스가 각각 하나씩 생성됩니다.*_</p>
+<p>또한 학습을 위해서는 전용 Custom Vision 리소스를 사용하고, 예측을 위해서는 모델을 Cognitive Services 리소스에 배포하는 혼합 및 일치 방법도 사용할 수 있습니다. 이렇게 하려면 학습 및 예측 리소스가 동일한 지역에 만들어져야 합니다.</p>
+<h2 id="model-training">모델 학습</h2>
+<p>분류 모델을 학습시키려면 학습 리소스에 이미지를 업로드하고 적절한 클래스 레이블로 레이블을 지정해야 합니다. 그런 다음 모델을 학습시키고 학습 결과를 평가해야 합니다.</p>
+<p>이러한 작업을 ‘Custom Vision 포털’에서 수행할 수도 있고 필요한 코딩 경험이 있다면 Custom Vision 서비스 프로그래밍 언어별 SDK(소프트웨어 개발 키트) 중 하나를 사용할 수도 있습니다._*</p>
+<p>분류를 위해 이미지를 사용할 때 고려해야 할 주요 사항 중 하나는 해당 개체에 대한 이미지가 충분한지 확인하는 것이며, 그러한 이미지는 다양한 각도에서 본 객체에 대한 것이어야 합니다.</p>
+<h2 id="model-evaluation">모델 평가</h2>
+<p>모델 학습 프로세스는 Custom Vision 서비스가 데이터 중 일부를 사용하여 모델을 반복적으로 학습시키는 반복적 프로세스이지만, 모델을 평가하기 위해 일부를 보류합니다. 학습 프로세스가 끝날 때 학습된 모델의 성능은 다음과 같은 평가 메트릭에 의해 표시됩니다.</p>
+<ul>
+<li><strong>정밀도</strong>: 모델에서 올바르게 이루어진 클래스 예측의 비율은 얼마인가요? 예를 들어 모델에서 10개의 이미지가 오렌지로 예측되고 8개의 이미지가 실제로 오렌지인 경우 정밀도는 0.8(80%)입니다.</li>
+<li><strong>재현율</strong>: 모델에서 올바르게 식별된 클래스 예측의 비율은 얼마인가요? 예를 들어 사과 이미지 10개가 있고 모델에서 그중 7개의 이미지를 찾은 경우 재현율은 0.7(70%)입니다.</li>
+<li><strong>AP(평균 정밀도)</strong>: 정밀도와 재현율을 모두 고려한 전체 메트릭입니다.</li>
+</ul>
+<h2 id="using-the-model-for-prediction">예측을 위한 모델 사용</h2>
+<p>모델을 학습시키고 평가된 성능에 만족하면 모델을 예측 리소스에 게시할 수 있습니다. 모델을 게시할 때 이름을 지정할 수 있습니다(기본값은 X가 모델을 학습한 횟수인 "반복 <em>X</em>"입니다).</p>
+<p>모델을 사용하려면 클라이언트 애플리케이션 개발자는 다음 정보가 필요합니다.</p>
+<ul>
+<li><strong>프로젝트 ID</strong>: 모델을 학습시키기 위해 만든 Custom Vision 프로젝트의 고유 ID입니다.</li>
+<li><strong>모델 이름</strong>: 게시하는 동안 모델에 할당된 이름입니다.</li>
+<li><strong>예측 엔드포인트</strong>: 모델을 게시한 ‘예측’ 리소스(학습 리소스가 ‘<strong>아님</strong>’)에 대한 엔드포인트의 HTTP 주소입니다.*_</li>
+<li>_ <em>예측 키</em>*: 모델을 게시한 ‘예측’ 리소스(학습 리소스가 ******‘아님’)의 인증 키입니다.</li>
+</ul>
+
+		<div id="next-section" class="modular-content-container is-hidden-portrait"><div><hr class="hr"><div>
+		<h2 class="title is-4 has-margin-top-none">다음 단원: 연습 - 이미지 분류 솔루션 만들기</h2>
+		<p>
+			<a href="https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/3-create-image-classifier/" class="button is-primary" data-bi-name="continue">
+			<span>계속</span>
+			<span class="icon docon docon-chevron-right-light" aria-hidden="true"></span>
+			</a>
+		</p>
+	</div></div></div>
+		<div data-progress-uid="learn.wwl.classify-images-custom-vision.get-started" class="xp-tag is-absolute has-top-zero has-right-zero has-margin-top-medium has-margin-top-large-tablet has-margin-top-extra-large-desktop has-margin-top-medium-interactive has-margin-right-large has-margin-right-extra-large-tablet has-margin-right-large-interactive is-complete">
+			<div class="xp-tag-hexagon">
+				<span class="xp-tag-icon is-shown-complete docon docon-check"></span>
+				<span aria-hidden="true" class="xp-tag-xp">100 XP</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+						<!-- </content> -->
+
+						</main>
+
+						<!-- page rating section -->
+						<!-- end page rating section -->
+
+<div class="modular-content-container has-margin-top-medium has-margin-bottom-medium">
+	<section class="feedback-section section is-full-height is-uniform has-padding-top-none has-padding-bottom-none is-relative">
+		<p class="has-text-weight-semibold">
+도움이 필요하신가요? <a id="troubleshooting-guide" class="has-text-primary" data-bi-name="troubleshooting" href="https://docs.microsoft.com/ko-kr/learn/support/troubleshooting?uid=learn.wwl.classify-images-custom-vision.get-started&amp;documentId=29f31033-ff25-da76-4eca-dedf719f1b5d&amp;versionIndependentDocumentId=4d434080-21d2-fb43-fcfc-efcee52afd98&amp;contentPath=%2FMicrosoftDocs%2Flearn-pr.ko-KR%2Fblob%2Flive%2Flearn-pr%2Fwwl-data-ai%2Fclassify-images-custom-vision%2F2-azure-image-classification.yml&amp;url=https%3A%2F%2Fdocs.microsoft.com%2Fko-kr%2Flearn%2Fmodules%2Fclassify-images-custom-vision%2F2-azure-image-classification&amp;author=gmalc">문제 해결 가이드</a>를 참조하거나, <a id="module-unit-feedback-link" class="has-text-primary" data-bi-name="feedback" href="https://docs.microsoft.com/ko-kr/learn/support/troubleshooting?uid=learn.wwl.classify-images-custom-vision.get-started&amp;documentId=29f31033-ff25-da76-4eca-dedf719f1b5d&amp;versionIndependentDocumentId=4d434080-21d2-fb43-fcfc-efcee52afd98&amp;contentPath=%2FMicrosoftDocs%2Flearn-pr.ko-KR%2Fblob%2Flive%2Flearn-pr%2Fwwl-data-ai%2Fclassify-images-custom-vision%2F2-azure-image-classification.yml&amp;url=https%3A%2F%2Fdocs.microsoft.com%2Fko-kr%2Flearn%2Fmodules%2Fclassify-images-custom-vision%2F2-azure-image-classification&amp;author=gmalc#report-feedback">문제를 보고</a>하여 구체적인 피드백을 보내 주세요.		</p>
+	</section>
+</div>
+
+						<!-- recommendations section -->
+						<!-- end recommendations section -->
+
+						<!-- feedback section -->
+						<!-- end feedback section -->
+
+						<!-- feedback report section -->
+						<!-- end feedback report section -->
+
+						<div class="footerContainer is-visible-interactive has-default-focus  has-border-top has-margin-none">
+
+
+
+	<footer id="footer-interactive" data-bi-name="footer" class="footer-layout">
+
+    <div class="is-flex is-full-height has-padding-right-extra-large-desktop">
+			<a data-mscc-ic="false" class="locale-selector-link has-flex-shrink-none" href="https://docs.microsoft.com/ko-kr/locale?target=https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/2-azure-image-classification" data-bi-name="select-locale"><span class="icon docon docon-world is-size-large has-margin-right-small" aria-hidden="true"></span><span class="local-selector-link-text">한국어</span></a>
+		<div class="has-margin-left-medium has-margin-right-medium has-flex-shrink-none">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button is-transparent is-small is-icon-only-touch has-inner-focus theme-dropdown-trigger" aria-controls="theme-menu-interactive" aria-expanded="false" title="테마" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>테마</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu-interactive" role="menu">
+		<ul class="theme-selector has-padding-small">
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start" data-theme-to="light">
+					<span class="theme-light has-margin-right-small">
+						<span class="theme-selector-icon css-variable-support has-border is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+밝음					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start" data-theme-to="dark">
+					<span class="theme-dark has-margin-right-small">
+						<span class="has-border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+어두움					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start" data-theme-to="high-contrast">
+					<span class="theme-high-contrast has-margin-right-small">
+						<span class="has-border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+고대비					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>		</div>
+	</div>
+    <ul class="links" data-bi-name="footerlinks">
+		<li class="manage-cookies-holder" hidden=""></li>
+			<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ko-kr/previous-versions/" data-bi-name="archivelink">이전 버전 문서</a></li>
+			<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ko-kr/teamblog" data-bi-name="bloglink">블로그</a></li>
+			<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ko-kr/contribute" data-bi-name="contributorGuide">참가</a></li>
+				<li><a class="has-text-weight-semibold" data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">개인정보처리방침</a></li>
+			<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ko-kr/legal/termsofuse" data-bi-name="termsofuse">사용 조건</a></li>
+			<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">상표</a></li>
+		<li>© Microsoft 2021</li>
+    </ul>
+</footer>
+						</div>
+					</div>
+
+
+					<!--end of div.columns -->
+				</div>
+
+			<!--end of .primary-holder -->
+			</section>
+
+			<aside id="interactive-container" class="interactive-container is-visible-interactive column has-body-background-dark ">
+			</aside>
+		</div>
+
+		<!--end of .mainContainer -->
+	</div>
+
+	<div class="footerContainer has-default-focus is-hidden-interactive  has-border-top has-margin-none">
+
+
+
+	<footer id="footer" data-bi-name="footer" class="footer-layout uhf-container has-padding" role="contentinfo">
+
+    <div class="is-flex is-full-height has-padding-right-extra-large-desktop">
+			<a data-mscc-ic="false" class="locale-selector-link has-flex-shrink-none" href="https://docs.microsoft.com/ko-kr/locale?target=https://docs.microsoft.com/ko-kr/learn/modules/classify-images-custom-vision/2-azure-image-classification" data-bi-name="select-locale"><span class="icon docon docon-world is-size-large has-margin-right-small" aria-hidden="true"></span><span class="local-selector-link-text">한국어</span></a>
+		<div class="has-margin-left-medium has-margin-right-medium has-flex-shrink-none">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button is-transparent is-small is-icon-only-touch has-inner-focus theme-dropdown-trigger" aria-controls="theme-menu" aria-expanded="false" title="테마" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>테마</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu" role="menu">
+		<ul class="theme-selector has-padding-small">
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start is-selected" data-theme-to="light" aria-pressed="true">
+					<span class="theme-light has-margin-right-small">
+						<span class="theme-selector-icon css-variable-support has-border is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+밝음					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start" data-theme-to="dark" aria-pressed="false">
+					<span class="theme-dark has-margin-right-small">
+						<span class="has-border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+어두움					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start" data-theme-to="high-contrast" aria-pressed="false">
+					<span class="theme-high-contrast has-margin-right-small">
+						<span class="has-border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+고대비					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>		</div>
+	</div>
+    <ul class="links" data-bi-name="footerlinks">
+		<li class="manage-cookies-holder" hidden=""></li>
+			<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ko-kr/previous-versions/" data-bi-name="archivelink">이전 버전 문서</a></li>
+			<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ko-kr/teamblog" data-bi-name="bloglink">블로그</a></li>
+			<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ko-kr/contribute" data-bi-name="contributorGuide">참가</a></li>
+				<li><a class="has-text-weight-semibold" data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">개인정보처리방침</a></li>
+			<li><a data-mscc-ic="false" href="https://docs.microsoft.com/ko-kr/legal/termsofuse" data-bi-name="termsofuse">사용 조건</a></li>
+			<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">상표</a></li>
+		<li>© Microsoft 2021</li>
+    </ul>
+</footer>
+	</div>
+
+		<script type="text/x-mathjax-config;executed=true">
+			MathJax.Hub.Config({
+				showMathMenu: false,
+				showMathMenuMSIE: false,
+				tex2jax: {
+					inlineMath: [['$','$'], ['\\(','\\)']],
+					processEscapes: true
+				}
+			});
+			MathJax.Hub.Register.StartupHook("End", function () {
+				document.documentElement.classList.add('mathjax-complete');
+			});
+		</script>
+		<script src="./Ch07_02Azure에서 이미지 분류 시작 - Learn _ Microsoft Docs_files/MathJax.js.다운로드" integrity="sha384-RLsAi7wiVvnmHrRjlVvUjU45C0bfsIBg6Gsxue6azjJi+lA5q5uK+XbGzO3yn5g1" crossorigin="anonymous"></script>
+	<div id="action-panel" role="region" aria-label="작업 패널" class="action-panel has-default-focus" tabindex="-1"></div>
+
+
+</body></html>
